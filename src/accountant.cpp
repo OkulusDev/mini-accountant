@@ -3,10 +3,10 @@
 class Account {
 public:
     std::string holder_name;
-    unsigned cash = 0;
+    double cash = 0.0;
     char currency{'R'}; // R - рубли, D - доллары
-    unsigned income = 0;
-    unsigned expenses = 0;
+    double income = 0.0;
+    double expenses = 0.0;
 
     void add_income(int money_income) {
         income += money_income;
@@ -33,8 +33,35 @@ std::string login() {
 int main() {
     Account account;
     Account *user = &account;
+    char command;
 
     user->holder_name = login();
+
+	std::cout << "1 - add cash to account; 2 - get cash from account" 
+            << std::endl;
+
+    while (true) {
+        std::cout << "ATM@" << user->holder_name << "$ ";
+        std::cin >> command;
+
+        if (command == '1') {
+            double cash_added;
+            std::cout << "Added cash to " << user->holder_name << " wallet" 
+                        << std::endl;
+            std::cout << "Enter count: ";
+            std::cin >> cash_added;
+
+            if (cash_added > 0.0) {
+                user->add_income(cash_added);
+            }
+
+            std::cout << "Cash is added. " << user->holder_name << "balance: " 
+                        << user->cash 
+                        << std::endl;
+        }
+
+        std::cout << std::endl;
+    }
 
     return 0;
 }
